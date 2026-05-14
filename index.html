@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberHassan | Security Terminal</title>
+    <title>CyberHassan | Terminal</title>
     <style>
         :root {
             --neon-green: #00ff00;
@@ -38,13 +38,13 @@
             top: 0;
             left: 0;
             z-index: -1;
-            opacity: 0.2;
+            opacity: 0.15;
         }
 
         .console-container {
             width: 95%;
             max-width: 900px;
-            background-color: rgba(5, 5, 5, 0.9);
+            background-color: rgba(5, 5, 5, 0.92);
             border: 1px solid var(--neon-blue);
             box-shadow: 0 0 30px rgba(0, 68, 204, 0.3);
             border-radius: 8px;
@@ -65,7 +65,7 @@
 
         @keyframes pulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.02); }
+            50% { opacity: 0.8; transform: scale(1.01); }
         }
 
         .status-bar {
@@ -77,7 +77,7 @@
             flex-wrap: wrap;
             gap: 10px;
             font-size: 0.75em;
-            margin-bottom: 20px;
+            margin: 20px 0;
             direction: ltr;
         }
 
@@ -89,7 +89,7 @@
         }
 
         .service-btn {
-            padding: 12px;
+            padding: 15px 10px;
             background: transparent;
             font-weight: bold;
             font-size: 0.85em;
@@ -98,6 +98,10 @@
             transition: 0.3s;
             border-radius: 4px;
             border: 1px solid #444;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
 
         .btn-ig { color: var(--instagram); border-color: var(--instagram); }
@@ -108,7 +112,7 @@
         .btn-video { color: var(--video-chat); border-color: var(--video-chat); }
         .btn-games { color: var(--games); border-color: var(--games); }
 
-        .service-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+        .service-btn:hover { background: rgba(255,255,255,0.05); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
 
         /* Modal Styles */
         .modal {
@@ -132,6 +136,8 @@
             max-width: 500px;
             box-shadow: 0 0 20px var(--neon-cyan);
             position: relative;
+            max-height: 80vh;
+            overflow-y: auto;
         }
 
         .close-modal {
@@ -153,21 +159,21 @@
             text-decoration: none;
             text-align: right;
             transition: 0.2s;
+            cursor: pointer;
         }
 
-        .menu-item:hover {
-            border-color: var(--neon-green);
-            background: #1a1a1a;
-        }
+        .menu-item:hover { border-color: var(--neon-green); background: #1a1a1a; padding-right: 25px; }
 
         .id-input {
             width: 100%;
-            padding: 10px;
-            margin-top: 10px;
+            padding: 12px;
+            margin: 15px 0;
             background: #000;
             border: 1px solid var(--neon-green);
             color: var(--neon-green);
             text-align: center;
+            outline: none;
+            box-sizing: border-box;
         }
 
         .main-btn {
@@ -180,25 +186,28 @@
             font-weight: bold;
             box-shadow: 0 0 15px var(--neon-red);
             margin-top: 20px;
+            transition: 0.3s;
         }
+        .main-btn:hover { background: #fff; color: #000; box-shadow: 0 0 25px #fff; }
+
+        #log-display { font-size: 0.7em; color: #444; margin-top: 20px; direction: ltr; text-align: center; }
     </style>
 </head>
 <body>
 
     <canvas id="matrix-canvas"></canvas>
 
-    <!-- النافذة المنبثقة الديناميكية -->
     <div id="serviceModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle" style="color: var(--neon-cyan); border-bottom: 1px solid var(--neon-cyan); padding-bottom: 10px; text-align: center;"></h2>
+            <h2 id="modalTitle" style="color: var(--neon-cyan); border-bottom: 1px solid var(--neon-cyan); padding-bottom: 10px; text-align: center; font-size: 1.2em;"></h2>
             <div id="modalBody"></div>
         </div>
     </div>
 
     <div class="console-container">
         <h1 class="brand-name">CYBERHASSAN</h1>
-        <div style="text-align:center; color:var(--neon-cyan); margin-bottom:20px; font-weight:bold;">نظام الخدمات التقنية المتكامل</div>
+        <div style="text-align:center; color:var(--neon-cyan); margin-bottom:10px; font-weight:bold; font-size: 0.9em;">Expert Digital Security & Tech Services</div>
 
         <div class="status-bar">
             <span>NETWORK: SECURE</span>
@@ -218,29 +227,30 @@
 
         <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="main-btn">تواصل مباشر مع الدعم الفني [!]</a>
 
-        <div id="log-display" style="text-align:center; font-size:0.7em; color:#555; margin-top:20px;">> Terminal Ready...</div>
-        <div style="text-align:center; font-size:0.6em; color:#222; margin-top:10px;">© 2026 CYBERHASSAN | KHAN YUNIS</div>
+        <div id="log-display">> Terminal Session Initialized... System Ready.</div>
+        <div style="text-align:center; font-size:0.6em; color:#333; margin-top:15px;">© 2026 CYBERHASSAN | KHAN YUNIS, GAZA</div>
     </div>
 
     <script>
-        // Matrix Effect
+        // Matrix Background
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.onresize = resize; resize();
         const drops = Array(Math.floor(canvas.width/15)).fill(1);
         function draw() {
-            ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#003300"; ctx.font = "15px arial";
+            ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "#003300"; ctx.font = "15px monospace";
             drops.forEach((y, i) => {
-                ctx.fillText(Math.floor(Math.random()*2), i * 15, y * 15);
+                const text = Math.floor(Math.random()*2);
+                ctx.fillText(text, i * 15, y * 15);
                 if (y * 15 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             });
         }
-        setInterval(draw, 33);
+        setInterval(draw, 35);
 
-        // Uptime Counter
+        // Timer
         let sec = 0;
         setInterval(() => {
             sec++;
@@ -250,31 +260,35 @@
             document.getElementById('uptime').innerText = `UPTIME: ${h}:${m}:${s}`;
         }, 1000);
 
-        // Service Modal Logic
+        // Services Data
         const services = {
-            ig: { title: "خدمات انستغرام", items: ["توثيق حساب انستغرام بالعلامة الزرقاء", "زيادة لايكات + متابعين + تعليقات"] },
-            fb: { title: "خدمات فيسبوك", items: ["توثيق حساب فيسبوك بالعلامة الزرقاء", "زيادة لايكات + متابعين + تعليقات"] },
-            wa: { title: "خدمات واتساب", items: ["تأمين حساب واتساب"] },
-            tg: { title: "خدمات تيليجرام", items: ["تخطي الدفع في تيليجرام", "توثيق حساب تيليجرام بالعلامة الزرقاء", "شحن نجوم تيليجرام"] },
-            snap: { title: "خدمات سناب شات", items: ["توثيق حساب سناب شات بالعلامة الزرقاء"] },
-            video: { title: "دردشة الفيديو", items: ["شحن كوينزات"], hasID: true },
-            games: { title: "خدمات الألعاب", items: ["شحن شدات / كوينزات / جواهر"], hasID: true }
+            ig: { title: "قائمة خدمات انستغرام", items: ["توثيق حساب انستغرام بالعلامة الزرقاء", "زيادة لايكات + متابعين + تعليقات"] },
+            fb: { title: "قائمة خدمات فيسبوك", items: ["توثيق حساب فيسبوك بالعلامة الزرقاء", "زيادة لايكات + متابعين + تعليقات"] },
+            wa: { title: "قائمة خدمات واتساب", items: ["تأمين حساب واتس اب"] },
+            tg: { title: "قائمة خدمات تيليجرام", items: ["تخطي الدفع في تيليجرام", "توثيق حساب تيليجرام بالعلامة الزرقاء", "شحن نجوم تيليجرام"] },
+            snap: { title: "قائمة خدمات سناب شات", items: ["توثيق حساب سناب شات بالعلامة الزرقاء"] },
+            video: { title: "خدمات شحن برامج الفيديو", items: ["شحن كوينزات (ضع الـ ID بالأسفل)"], hasID: true },
+            games: { title: "مركز شحن الألعاب", items: ["شحن شدات / كوينزات / جواهر (ضع الـ ID بالأسفل)"], hasID: true }
         };
 
         function openService(key) {
             const data = services[key];
             document.getElementById('modalTitle').innerText = data.title;
             let html = data.items.map(item => `<a href="https://www.instagram.com/ha77an_x220" target="_blank" class="menu-item">> ${item}</a>`).join('');
+            
             if(data.hasID) {
-                html += `<div style="margin-top:20px; color:var(--neon-green); text-align:center;">يرجى إدخال الـ ID الخاص بك:</div>
-                         <input type="text" class="id-input" placeholder="Enter ID here...">
-                         <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="menu-item" style="text-align:center; background:var(--neon-blue); margin-top:15px;">تأكيد وطلب الشحن</a>`;
+                html += `<div style="padding:10px; border:1px dashed var(--neon-green); margin-top:15px;">
+                            <input type="text" class="id-input" placeholder="أدخل الـ ID الخاص بك هنا...">
+                            <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="menu-item" style="text-align:center; background:var(--neon-blue); color:white;">تأكيد وطلب الشحن</a>
+                         </div>`;
             }
+            
             document.getElementById('modalBody').innerHTML = html;
             document.getElementById('serviceModal').style.display = "flex";
         }
 
         function closeModal() { document.getElementById('serviceModal').style.display = "none"; }
+        window.onclick = function(event) { if (event.target == document.getElementById('serviceModal')) closeModal(); }
     </script>
 </body>
 </html>
