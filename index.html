@@ -90,29 +90,6 @@
             color: var(--neon-green);
         }
 
-        /* قسم الأخبار الجديد */
-        .news-section {
-            background: rgba(0, 68, 204, 0.05);
-            border-right: 3px solid var(--neon-blue);
-            padding: 15px;
-            margin-bottom: 20px;
-            text-align: right;
-        }
-
-        .news-item {
-            margin-bottom: 10px;
-            border-bottom: 1px dotted #222;
-            padding-bottom: 5px;
-            list-style: none;
-        }
-
-        .news-date {
-            color: var(--neon-red);
-            font-size: 0.85em;
-            margin-left: 10px;
-            font-family: sans-serif;
-        }
-
         .scanner-box {
             border: 1px dashed #444;
             padding: 15px;
@@ -165,7 +142,7 @@
 
         .social-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
             gap: 10px;
             margin-top: 10px;
         }
@@ -177,10 +154,58 @@
             font-weight: bold;
             font-size: 0.85em;
             border-radius: 3px;
+            cursor: pointer;
         }
 
         .tg { border: 1px solid #0088cc; color: #0088cc; }
         .ig { border: 1px solid #e1306c; color: #e1306c; }
+        .news-btn { border: 1px solid var(--neon-cyan); color: var(--neon-cyan); background: transparent; }
+
+        /* نافذة الأخبار المنبثقة */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: #050505;
+            border: 2px solid var(--neon-cyan);
+            padding: 20px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 0 20px var(--neon-cyan);
+        }
+
+        .news-item {
+            margin-bottom: 15px;
+            border-bottom: 1px dotted #333;
+            padding-bottom: 10px;
+            list-style: none;
+            text-align: right;
+        }
+
+        .news-date {
+            color: var(--neon-red);
+            font-size: 0.85em;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .close-modal {
+            color: var(--neon-red);
+            float: left;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
 
         #log-display {
             font-size: 0.7em;
@@ -206,9 +231,20 @@
 
     <canvas id="matrix-canvas"></canvas>
 
+    <!-- نافذة الأخبار (مخفية افتراضياً) -->
+    <div id="newsModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeNews()">&times;</span>
+            <h2 style="color: var(--neon-cyan); border-bottom: 1px solid var(--neon-cyan); padding-bottom: 10px;">[!] آخر الأخبار الأمنية</h2>
+            <ul id="news-list" style="padding: 0; margin-top: 20px;">
+                <!-- يتم التحميل عبر JS -->
+            </ul>
+        </div>
+    </div>
+
     <div class="console-container">
         <h1 class="brand-name">CYBERHASSAN</h1>
-        <div class="subtitle">جاهزون لخدمتكم على مدار الساعة التواصل عبر انستغرام او تيليجرام</div>
+        <div class="subtitle">جاهزون لخدمتكم على مدار الساعة</div>
 
         <div class="status-bar">
             <span>NETWORK: SECURE</span>
@@ -218,15 +254,7 @@
 
         <div class="content-area">
             <div>> أهلاً بك في المنطقة الآمنة داخل سايبر حسن.</div>
-            <div>> إذا كنت تتعرض لابتزاز، أو تهديد رقمي، فأنت في المكان الصحيح.</div>
-        </div>
-
-        <!-- قسم الأخبار الأمنية -->
-        <div class="news-section">
-            <div style="color: var(--neon-cyan); margin-bottom: 10px; font-weight: bold;">[!] آخر التنبيهات والأخبار الأمنية:</div>
-            <ul id="news-list" style="padding: 0; margin: 0;">
-                <!-- يتم التحميل عبر JS -->
-            </ul>
+            <div>> إذا كنت تتعرض لابتزاز رقمي، فأنت في المكان الصحيح.</div>
         </div>
 
         <div class="scanner-box">
@@ -238,11 +266,10 @@
 
         <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="main-btn">SUBMIT EMERGENCY REQUEST [!]</a>
 
-        <div style="text-align:center; color:#fff; font-size:0.8em; margin-bottom:10px;">Send an urgent request via Telegram or Instagram</div>
-
         <div class="social-grid">
-            <a href="https://t.me/EngHassanBMohra" target="_blank" class="social-btn tg">Telegram: @EngHassanBMohra</a>
-            <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="social-btn ig">Instagram: ha77an_x220</a>
+            <button onclick="openNews()" class="social-btn news-btn">آخر الأخبار الأمنية 📢</button>
+            <a href="https://t.me/EngHassanBMohra" target="_blank" class="social-btn tg">Telegram</a>
+            <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="social-btn ig">Instagram</a>
         </div>
 
         <div id="log-display">> Initializing Terminal...</div>
@@ -290,6 +317,15 @@
             document.getElementById('uptime').innerText = `UPTIME: ${h}:${m}:${s}`;
         }, 1000);
 
+        // Modal Controls
+        function openNews() {
+            document.getElementById('newsModal').style.display = "flex";
+            loadNews();
+        }
+        function closeNews() {
+            document.getElementById('newsModal').style.display = "none";
+        }
+
         // Security News Data
         const securityNews = [
             { date: "2026-05-14", msg: "تحذير: حملة تصيد تستهدف مستخدمي المحافظ الرقمية في المنطقة." },
@@ -302,7 +338,7 @@
             list.innerHTML = securityNews.map(news => `
                 <li class="news-item">
                     <span class="news-date">[${news.date}]</span>
-                    <span class="news-text">${news.msg}</span>
+                    <span class="news-text" style="color:#eee;">${news.msg}</span>
                 </li>
             `).join('');
         }
@@ -315,32 +351,23 @@
             res.innerHTML = "<span style='color:yellow;'>جاري التحليل...</span>";
             setTimeout(() => {
                 if(!url.startsWith('https://')) res.innerHTML = "<span style='color:red;'>[خطر] الرابط غير مشفر (HTTP)!</span>";
-                else if(url.includes('login') || url.includes('free') || url.includes('bit.ly') || url.includes('gift')) res.innerHTML = "<span style='color:orange;'>[تحذير] الرابط يحتوي على كلمات مشبوهة!</span>";
-                else res.innerHTML = "<span style='color:green;'>[آمن] لم يتم رصد تهديد مباشر في بنية الرابط.</span>";
+                else if(url.includes('login') || url.includes('free') || url.includes('bit.ly')) res.innerHTML = "<span style='color:orange;'>[تحذير] الرابط مشبوه!</span>";
+                else res.innerHTML = "<span style='color:green;'>[آمن] لم يتم رصد تهديد مباشر.</span>";
             }, 1500);
         }
-
-        // Live Logs
-        const logs = ["Scanning for XSS...", "SSL: Verified", "Proxy: Stable", "Packet Trace: OK", "Deep Inspection..."];
-        setInterval(() => {
-            document.getElementById('log-display').innerText = "> " + logs[Math.floor(Math.random()*logs.length)];
-        }, 3000);
 
         // Security Tips
         const tips = [
             "نصيحة أمنية: لا تستخدم كلمة مرور واحدة لجميع حساباتك.",
-            "نصيحة أمنية: فعّل التحقق الثنائي (2FA) فوراً على كافة حساباتك.",
-            "نصيحة أمنية: احذر من الروابط التي تطلب منك تسجيل الدخول المفاجئ.",
-            "نصيحة أمنية: تأكد من تحديث نظام هاتفك وتطبيقاتك بشكل دوري."
+            "نصيحة أمنية: فعّل التحقق الثنائي (2FA) فوراً.",
+            "نصيحة أمنية: احذر من الروابط التي تطلب تسجيل الدخول.",
+            "نصيحة أمنية: تأكد من تحديث نظام هاتفك دورياً."
         ];
         let tipIdx = 0;
         setInterval(() => {
             tipIdx = (tipIdx + 1) % tips.length;
             document.getElementById('tipText').innerText = tips[tipIdx];
         }, 6000);
-
-        // Initialize News on load
-        window.onload = loadNews;
     </script>
 </body>
 </html>
