@@ -11,6 +11,11 @@
             --neon-blue: #0044cc;
             --neon-cyan: #00cccc;
             --neon-yellow: #ffaa00;
+            /* ألوان المنصات */
+            --instagram: #e1306c;
+            --facebook: #1877f2;
+            --whatsapp: #25d366;
+            --telegram: #0088cc;
         }
 
         body {
@@ -134,34 +139,59 @@
             font-weight: bold;
             font-size: 1.1em;
             box-shadow: 0 0 15px var(--neon-red);
-            margin-bottom: 15px;
+            margin-bottom: 20px;
             transition: 0.3s;
         }
 
         .main-btn:hover { background: #fff; color: #000; box-shadow: 0 0 30px #fff; }
 
-        .social-grid {
+        /* تنسيق شبكة الخدمات الجديدة */
+        .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-            gap: 10px;
-            margin-top: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
-        .social-btn {
-            padding: 12px;
-            text-decoration: none;
-            text-align: center;
+        .service-btn {
+            padding: 15px;
+            background: transparent;
             font-weight: bold;
-            font-size: 0.85em;
-            border-radius: 3px;
+            font-size: 0.9em;
+            text-align: center;
             cursor: pointer;
+            transition: 0.3s;
+            border-radius: 4px;
+            text-decoration: none;
         }
 
-        .tg { border: 1px solid #0088cc; color: #0088cc; }
-        .ig { border: 1px solid #e1306c; color: #e1306c; }
-        .news-btn { border: 1px solid var(--neon-cyan); color: var(--neon-cyan); background: transparent; }
+        .btn-ig { border: 1px solid var(--instagram); color: var(--instagram); }
+        .btn-ig:hover { background: var(--instagram); color: #fff; box-shadow: 0 0 15px var(--instagram); }
 
-        /* نافذة الأخبار المنبثقة */
+        .btn-fb { border: 1px solid var(--facebook); color: var(--facebook); }
+        .btn-fb:hover { background: var(--facebook); color: #fff; box-shadow: 0 0 15px var(--facebook); }
+
+        .btn-wa { border: 1px solid var(--whatsapp); color: var(--whatsapp); }
+        .btn-wa:hover { background: var(--whatsapp); color: #fff; box-shadow: 0 0 15px var(--whatsapp); }
+
+        .btn-tg { border: 1px solid var(--telegram); color: var(--telegram); }
+        .btn-tg:hover { background: var(--telegram); color: #fff; box-shadow: 0 0 15px var(--telegram); }
+
+        .news-trigger-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 15px;
+        }
+
+        .news-trigger-btn:hover { background: var(--neon-cyan); color: #000; }
+
+        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -182,21 +212,6 @@
             width: 90%;
             max-width: 600px;
             box-shadow: 0 0 20px var(--neon-cyan);
-        }
-
-        .news-item {
-            margin-bottom: 15px;
-            border-bottom: 1px dotted #333;
-            padding-bottom: 10px;
-            list-style: none;
-            text-align: right;
-        }
-
-        .news-date {
-            color: var(--neon-red);
-            font-size: 0.85em;
-            display: block;
-            margin-bottom: 5px;
         }
 
         .close-modal {
@@ -223,7 +238,6 @@
             color: var(--neon-yellow);
             font-size: 0.85em;
             text-align: center;
-            font-style: italic;
         }
     </style>
 </head>
@@ -231,58 +245,59 @@
 
     <canvas id="matrix-canvas"></canvas>
 
-    <!-- نافذة الأخبار (مخفية افتراضياً) -->
     <div id="newsModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeNews()">&times;</span>
             <h2 style="color: var(--neon-cyan); border-bottom: 1px solid var(--neon-cyan); padding-bottom: 10px;">[!] آخر الأخبار الأمنية</h2>
-            <ul id="news-list" style="padding: 0; margin-top: 20px;">
-                <!-- يتم التحميل عبر JS -->
-            </ul>
+            <ul id="news-list" style="padding: 0; margin-top: 20px; list-style: none;"></ul>
         </div>
     </div>
 
     <div class="console-container">
         <h1 class="brand-name">CYBERHASSAN</h1>
-        <div class="subtitle">جاهزون لخدمتكم على مدار الساعة</div>
+        <div class="subtitle">خدمات الأمن الرقمي الاحترافية</div>
 
         <div class="status-bar">
             <span>NETWORK: SECURE</span>
-            <span>ENCRYPTION: AES-256</span>
+            <span>STATUS: ACTIVE</span>
             <span id="uptime">UPTIME: 00:00:00</span>
         </div>
 
         <div class="content-area">
-            <div>> أهلاً بك في المنطقة الآمنة داخل سايبر حسن.</div>
-            <div>> إذا كنت تتعرض لابتزاز رقمي، فأنت في المكان الصحيح.</div>
+            <div>> أهلاً بك في نظام التشغيل الآمن.</div>
+            <div>> اختر الخدمة المطلوبة لبدء الدعم الفني.</div>
+        </div>
+
+        <!-- شبكة الخدمات الجديدة -->
+        <div class="services-grid">
+            <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="service-btn btn-ig">خدمات انستغرام</a>
+            <a href="#" class="service-btn btn-fb">خدمات فيسبوك</a>
+            <a href="#" class="service-btn btn-wa">خدمات واتساب</a>
+            <a href="https://t.me/EngHassanBMohra" target="_blank" class="service-btn btn-tg">خدمات تيليجرام</a>
         </div>
 
         <div class="scanner-box">
-            <div style="margin-bottom:10px; font-size:0.8em; color:#fff;">أداة فحص الروابط المشبوهة (Smart Scan)</div>
-            <input type="text" id="urlInput" class="scanner-input" placeholder="ضع الرابط هنا...">
-            <button class="scan-btn" onclick="startScan()">فحص الرابط</button>
+            <div style="margin-bottom:10px; font-size:0.8em; color:#fff;">أداة فحص الروابط (Smart Scan)</div>
+            <input type="text" id="urlInput" class="scanner-input" placeholder="أدخل الرابط للفحص...">
+            <button class="scan-btn" onclick="startScan()">بدء الفحص</button>
             <div id="scanResult" style="margin-top: 10px; font-size: 0.8em;"></div>
         </div>
 
-        <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="main-btn">SUBMIT EMERGENCY REQUEST [!]</a>
+        <button onclick="openNews()" class="news-trigger-btn">عرض آخر الأخبار الأمنية 📢</button>
+        
+        <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="main-btn">تقديم طلب طوارئ عاجل [!]</a>
 
-        <div class="social-grid">
-            <button onclick="openNews()" class="social-btn news-btn">آخر الأخبار الأمنية 📢</button>
-            <a href="https://t.me/EngHassanBMohra" target="_blank" class="social-btn tg">Telegram</a>
-            <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="social-btn ig">Instagram</a>
-        </div>
-
-        <div id="log-display">> Initializing Terminal...</div>
+        <div id="log-display">> System Ready...</div>
 
         <div class="tip-box" id="tipText">
-            نصيحة أمنية: لا تستخدم كلمة مرور واحدة لجميع حساباتك.
+            نصيحة: لا تفتح روابط من مصادر مجهولة.
         </div>
 
-        <div style="text-align:center; font-size:0.6em; color:#222; margin-top:20px;">© 2026 CYBERHASSAN PROTOCOL | ALPHA V6.1</div>
+        <div style="text-align:center; font-size:0.6em; color:#222; margin-top:20px;">© 2026 CYBERHASSAN | KHAN YUNIS, GAZA</div>
     </div>
 
     <script>
-        // Matrix Background
+        // Matrix Effect
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         function resize() {
@@ -307,7 +322,7 @@
         }
         setInterval(draw, 33);
 
-        // Uptime Counter
+        // Uptime
         let sec = 0;
         setInterval(() => {
             sec++;
@@ -317,7 +332,7 @@
             document.getElementById('uptime').innerText = `UPTIME: ${h}:${m}:${s}`;
         }, 1000);
 
-        // Modal Controls
+        // Modal
         function openNews() {
             document.getElementById('newsModal').style.display = "flex";
             loadNews();
@@ -326,48 +341,40 @@
             document.getElementById('newsModal').style.display = "none";
         }
 
-        // Security News Data
         const securityNews = [
-            { date: "2026-05-14", msg: "تحذير: حملة تصيد تستهدف مستخدمي المحافظ الرقمية في المنطقة." },
-            { date: "2026-05-13", msg: "تحديث أمني هام لمتصفحات الهواتف الذكية لسد ثغرة برمجية خطيرة." },
-            { date: "2026-05-12", msg: "رصد نشاط مشبوه لروابط تدعي تقديم مساعدات تقنية فورية." }
+            { date: "2026-05-14", msg: "تحذير من حملات تصيد تستهدف حسابات التواصل الاجتماعي في غزة." },
+            { date: "2026-05-13", msg: "تحديث أمني جديد لتطبيق واتساب، يرجى التحديث فوراً." }
         ];
 
         function loadNews() {
             const list = document.getElementById('news-list');
             list.innerHTML = securityNews.map(news => `
-                <li class="news-item">
-                    <span class="news-date">[${news.date}]</span>
-                    <span class="news-text" style="color:#eee;">${news.msg}</span>
+                <li style="margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px;">
+                    <span style="color: var(--neon-red); font-size: 0.8em;">[${news.date}]</span><br>
+                    <span style="color: #eee;">${news.msg}</span>
                 </li>
             `).join('');
         }
 
-        // Smart Scanner
+        // Scanner
         function startScan() {
             const res = document.getElementById('scanResult');
-            const url = document.getElementById('urlInput').value.trim().toLowerCase();
-            if(!url) return alert("يرجى إدخال رابط");
-            res.innerHTML = "<span style='color:yellow;'>جاري التحليل...</span>";
+            const url = document.getElementById('urlInput').value.trim();
+            if(!url) return;
+            res.innerHTML = "<span style='color:yellow;'>Scanning...</span>";
             setTimeout(() => {
-                if(!url.startsWith('https://')) res.innerHTML = "<span style='color:red;'>[خطر] الرابط غير مشفر (HTTP)!</span>";
-                else if(url.includes('login') || url.includes('free') || url.includes('bit.ly')) res.innerHTML = "<span style='color:orange;'>[تحذير] الرابط مشبوه!</span>";
-                else res.innerHTML = "<span style='color:green;'>[آمن] لم يتم رصد تهديد مباشر.</span>";
-            }, 1500);
+                if(!url.startsWith('https')) res.innerHTML = "<span style='color:red;'>[!!] الرابط غير آمن!</span>";
+                else res.innerHTML = "<span style='color:green;'>[OK] لم يتم العثور على تهديد.</span>";
+            }, 1000);
         }
 
-        // Security Tips
-        const tips = [
-            "نصيحة أمنية: لا تستخدم كلمة مرور واحدة لجميع حساباتك.",
-            "نصيحة أمنية: فعّل التحقق الثنائي (2FA) فوراً.",
-            "نصيحة أمنية: احذر من الروابط التي تطلب تسجيل الدخول.",
-            "نصيحة أمنية: تأكد من تحديث نظام هاتفك دورياً."
-        ];
-        let tipIdx = 0;
+        // Tips
+        const tips = ["احذر الهندسة الاجتماعية", "فعّل التحقق الثنائي", "حدث تطبيقاتك دورياً"];
+        let tIdx = 0;
         setInterval(() => {
-            tipIdx = (tipIdx + 1) % tips.length;
-            document.getElementById('tipText').innerText = tips[tipIdx];
-        }, 6000);
+            document.getElementById('tipText').innerText = "نصيحة: " + tips[tIdx];
+            tIdx = (tIdx + 1) % tips.length;
+        }, 5000);
     </script>
 </body>
 </html>
