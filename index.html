@@ -63,11 +63,6 @@
             animation: pulse 2s infinite;
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.8; transform: scale(1.01); }
-        }
-
         .status-bar {
             background: #111;
             border: 1px solid #333;
@@ -98,10 +93,6 @@
             transition: 0.3s;
             border-radius: 4px;
             border: 1px solid #444;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
         }
 
         .btn-ig { color: var(--instagram); border-color: var(--instagram); }
@@ -112,9 +103,8 @@
         .btn-video { color: var(--video-chat); border-color: var(--video-chat); }
         .btn-games { color: var(--games); border-color: var(--games); }
 
-        .service-btn:hover { background: rgba(255,255,255,0.05); transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.5); }
+        .service-btn:hover { background: rgba(255,255,255,0.05); transform: translateY(-3px); }
 
-        /* Modal Styles */
         .modal {
             display: none;
             position: fixed;
@@ -134,10 +124,8 @@
             padding: 25px;
             width: 90%;
             max-width: 500px;
-            box-shadow: 0 0 20px var(--neon-cyan);
             position: relative;
-            max-height: 80vh;
-            overflow-y: auto;
+            text-align: center;
         }
 
         .close-modal {
@@ -157,12 +145,12 @@
             border: 1px solid #333;
             color: #eee;
             text-decoration: none;
-            text-align: right;
+            text-align: center;
             transition: 0.2s;
             cursor: pointer;
         }
 
-        .menu-item:hover { border-color: var(--neon-green); background: #1a1a1a; padding-right: 25px; }
+        .menu-item:hover { border-color: var(--neon-green); background: #1a1a1a; }
 
         .id-input {
             width: 100%;
@@ -173,7 +161,6 @@
             color: var(--neon-green);
             text-align: center;
             outline: none;
-            box-sizing: border-box;
         }
 
         .main-btn {
@@ -186,11 +173,9 @@
             font-weight: bold;
             box-shadow: 0 0 15px var(--neon-red);
             margin-top: 20px;
-            transition: 0.3s;
         }
-        .main-btn:hover { background: #fff; color: #000; box-shadow: 0 0 25px #fff; }
 
-        #log-display { font-size: 0.7em; color: #444; margin-top: 20px; direction: ltr; text-align: center; }
+        #check-msg { margin-top: 10px; font-size: 0.9em; display: none; }
     </style>
 </head>
 <body>
@@ -200,14 +185,15 @@
     <div id="serviceModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 id="modalTitle" style="color: var(--neon-cyan); border-bottom: 1px solid var(--neon-cyan); padding-bottom: 10px; text-align: center; font-size: 1.2em;"></h2>
+            <h2 id="modalTitle" style="color: var(--neon-cyan); margin-bottom: 20px;"></h2>
             <div id="modalBody"></div>
+            <div id="check-msg"></div>
         </div>
     </div>
 
     <div class="console-container">
         <h1 class="brand-name">CYBERHASSAN</h1>
-        <div style="text-align:center; color:var(--neon-cyan); margin-bottom:10px; font-weight:bold; font-size: 0.9em;">Expert Digital Security & Tech Services</div>
+        <div style="text-align:center; color:var(--neon-cyan); margin-bottom:10px; font-weight:bold;">نظام التوجيه والخدمات الرقمية</div>
 
         <div class="status-bar">
             <span>NETWORK: SECURE</span>
@@ -225,10 +211,9 @@
             <div class="service-btn btn-games" onclick="openService('games')">خدمات الألعاب</div>
         </div>
 
-        <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="main-btn">تواصل مباشر مع الدعم الفني [!]</a>
+        <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="main-btn">تواصل مباشر مع الدعم [!]</a>
 
-        <div id="log-display">> Terminal Session Initialized... System Ready.</div>
-        <div style="text-align:center; font-size:0.6em; color:#333; margin-top:15px;">© 2026 CYBERHASSAN | KHAN YUNIS, GAZA</div>
+        <div style="text-align:center; font-size:0.6em; color:#333; margin-top:20px;">© 2026 CYBERHASSAN | KHAN YUNIS</div>
     </div>
 
     <script>
@@ -242,15 +227,14 @@
             ctx.fillStyle = "rgba(0, 0, 0, 0.05)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#003300"; ctx.font = "15px monospace";
             drops.forEach((y, i) => {
-                const text = Math.floor(Math.random()*2);
-                ctx.fillText(text, i * 15, y * 15);
+                ctx.fillText(Math.floor(Math.random()*2), i * 15, y * 15);
                 if (y * 15 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
             });
         }
         setInterval(draw, 35);
 
-        // Timer
+        // Uptime
         let sec = 0;
         setInterval(() => {
             sec++;
@@ -260,35 +244,51 @@
             document.getElementById('uptime').innerText = `UPTIME: ${h}:${m}:${s}`;
         }, 1000);
 
-        // Services Data
+        // Logic
         const services = {
-            ig: { title: "قائمة خدمات انستغرام", items: ["توثيق حساب انستغرام بالعلامة الزرقاء", "زيادة لايكات + متابعين + تعليقات"] },
-            fb: { title: "قائمة خدمات فيسبوك", items: ["توثيق حساب فيسبوك بالعلامة الزرقاء", "زيادة لايكات + متابعين + تعليقات"] },
-            wa: { title: "قائمة خدمات واتساب", items: ["تأمين حساب واتس اب"] },
-            tg: { title: "قائمة خدمات تيليجرام", items: ["تخطي الدفع في تيليجرام", "توثيق حساب تيليجرام بالعلامة الزرقاء", "شحن نجوم تيليجرام"] },
-            snap: { title: "قائمة خدمات سناب شات", items: ["توثيق حساب سناب شات بالعلامة الزرقاء"] },
-            video: { title: "خدمات شحن برامج الفيديو", items: ["شحن كوينزات (ضع الـ ID بالأسفل)"], hasID: true },
-            games: { title: "مركز شحن الألعاب", items: ["شحن شدات / كوينزات / جواهر (ضع الـ ID بالأسفل)"], hasID: true }
+            ig: { title: "خدمات انستغرام", items: ["توثيق بالعلامة الزرقاء", "زيادة لايكات ومتابعين"], url: "https://www.instagram.com" },
+            fb: { title: "خدمات فيسبوك", items: ["توثيق بالعلامة الزرقاء", "زيادة لايكات ومتابعين"], url: "https://www.facebook.com" },
+            wa: { title: "خدمات واتساب", items: ["تأمين حساب واتساب"], url: "https://www.whatsapp.com" },
+            tg: { title: "خدمات تيليجرام", items: ["تخطي الدفع", "توثيق الحساب", "شحن نجوم"], url: "https://t.me" },
+            snap: { title: "خدمات سناب شات", items: ["توثيق بالعلامة الزرقاء"], url: "https://www.snapchat.com" },
+            video: { title: "شحن دردشة الفيديو", items: ["شحن كوينزات"], isID: true },
+            games: { title: "شحن الألعاب", items: ["شحن شدات / جواهر / كوينز"], isID: true }
         };
 
         function openService(key) {
             const data = services[key];
+            const modalBody = document.getElementById('modalBody');
+            const checkMsg = document.getElementById('check-msg');
+            checkMsg.style.display = "none";
+            
             document.getElementById('modalTitle').innerText = data.title;
-            let html = data.items.map(item => `<a href="https://www.instagram.com/ha77an_x220" target="_blank" class="menu-item">> ${item}</a>`).join('');
             
-            if(data.hasID) {
-                html += `<div style="padding:10px; border:1px dashed var(--neon-green); margin-top:15px;">
-                            <input type="text" class="id-input" placeholder="أدخل الـ ID الخاص بك هنا...">
-                            <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="menu-item" style="text-align:center; background:var(--neon-blue); color:white;">تأكيد وطلب الشحن</a>
-                         </div>`;
+            if (data.isID) {
+                modalBody.innerHTML = `
+                    <p style="color:#fff;">أدخل الـ ID الخاص بك للبدء:</p>
+                    <input type="text" id="user-id" class="id-input" placeholder="ID...">
+                    <button class="menu-item" style="width:100%" onclick="verifyID()">تأكيد وطلب الشحن</button>
+                `;
+            } else {
+                modalBody.innerHTML = data.items.map(item => `
+                    <a href="${data.url}" target="_blank" class="menu-item">${item}</a>
+                `).join('');
             }
-            
-            document.getElementById('modalBody').innerHTML = html;
             document.getElementById('serviceModal').style.display = "flex";
         }
 
+        function verifyID() {
+            const idValue = document.getElementById('user-id').value;
+            const msg = document.getElementById('check-msg');
+            if (idValue.trim() === "") {
+                msg.innerHTML = "<span style='color:red;'>يرجى إدخال الـ ID أولاً!</span>";
+            } else {
+                msg.innerHTML = "<span style='color:yellow;'>يرجى التحقق من الـ ID المدخل... جارٍ المعالجة</span>";
+            }
+            msg.style.display = "block";
+        }
+
         function closeModal() { document.getElementById('serviceModal').style.display = "none"; }
-        window.onclick = function(event) { if (event.target == document.getElementById('serviceModal')) closeModal(); }
     </script>
 </body>
 </html>
