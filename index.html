@@ -10,6 +10,7 @@
             --neon-red: #ff0000;
             --neon-blue: #0044cc;
             --neon-cyan: #00cccc;
+            --neon-yellow: #ffaa00;
         }
 
         body {
@@ -81,13 +82,35 @@
             direction: ltr;
         }
 
-        /* تعديل هنا: جعل النصوص في المنتصف */
         .content-area {
-            text-align: center; /* جعل النص في الوسط */
+            text-align: center;
             line-height: 1.8;
             font-size: clamp(0.9em, 3.5vw, 1.1em);
             margin-bottom: 25px;
             color: var(--neon-green);
+        }
+
+        /* قسم الأخبار الجديد */
+        .news-section {
+            background: rgba(0, 68, 204, 0.05);
+            border-right: 3px solid var(--neon-blue);
+            padding: 15px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        .news-item {
+            margin-bottom: 10px;
+            border-bottom: 1px dotted #222;
+            padding-bottom: 5px;
+            list-style: none;
+        }
+
+        .news-date {
+            color: var(--neon-red);
+            font-size: 0.85em;
+            margin-left: 10px;
+            font-family: sans-serif;
         }
 
         .scanner-box {
@@ -172,7 +195,7 @@
             margin-top: 20px;
             border-top: 1px solid #222;
             padding-top: 15px;
-            color: #ffaa00;
+            color: var(--neon-yellow);
             font-size: 0.85em;
             text-align: center;
             font-style: italic;
@@ -196,7 +219,14 @@
         <div class="content-area">
             <div>> أهلاً بك في المنطقة الآمنة داخل سايبر حسن.</div>
             <div>> إذا كنت تتعرض لابتزاز، أو تهديد رقمي، فأنت في المكان الصحيح.</div>
-            <div>> فريقنا جاهز للتدخل وتحليل الحالة تواصل معنا عبر الخاص.</div>
+        </div>
+
+        <!-- قسم الأخبار الأمنية -->
+        <div class="news-section">
+            <div style="color: var(--neon-cyan); margin-bottom: 10px; font-weight: bold;">[!] آخر التنبيهات والأخبار الأمنية:</div>
+            <ul id="news-list" style="padding: 0; margin: 0;">
+                <!-- يتم التحميل عبر JS -->
+            </ul>
         </div>
 
         <div class="scanner-box">
@@ -260,6 +290,23 @@
             document.getElementById('uptime').innerText = `UPTIME: ${h}:${m}:${s}`;
         }, 1000);
 
+        // Security News Data
+        const securityNews = [
+            { date: "2026-05-14", msg: "تحذير: حملة تصيد تستهدف مستخدمي المحافظ الرقمية في المنطقة." },
+            { date: "2026-05-13", msg: "تحديث أمني هام لمتصفحات الهواتف الذكية لسد ثغرة برمجية خطيرة." },
+            { date: "2026-05-12", msg: "رصد نشاط مشبوه لروابط تدعي تقديم مساعدات تقنية فورية." }
+        ];
+
+        function loadNews() {
+            const list = document.getElementById('news-list');
+            list.innerHTML = securityNews.map(news => `
+                <li class="news-item">
+                    <span class="news-date">[${news.date}]</span>
+                    <span class="news-text">${news.msg}</span>
+                </li>
+            `).join('');
+        }
+
         // Smart Scanner
         function startScan() {
             const res = document.getElementById('scanResult');
@@ -268,8 +315,8 @@
             res.innerHTML = "<span style='color:yellow;'>جاري التحليل...</span>";
             setTimeout(() => {
                 if(!url.startsWith('https://')) res.innerHTML = "<span style='color:red;'>[خطر] الرابط غير مشفر (HTTP)!</span>";
-                else if(url.includes('login') || url.includes('free') || url.includes('bit.ly')) res.innerHTML = "<span style='color:orange;'>[تحذير] الرابط مشبوه أو مختصر!</span>";
-                else res.innerHTML = "<span style='color:green;'>[آمن] لم يتم رصد تهديد مباشر.</span>";
+                else if(url.includes('login') || url.includes('free') || url.includes('bit.ly') || url.includes('gift')) res.innerHTML = "<span style='color:orange;'>[تحذير] الرابط يحتوي على كلمات مشبوهة!</span>";
+                else res.innerHTML = "<span style='color:green;'>[آمن] لم يتم رصد تهديد مباشر في بنية الرابط.</span>";
             }, 1500);
         }
 
@@ -282,15 +329,18 @@
         // Security Tips
         const tips = [
             "نصيحة أمنية: لا تستخدم كلمة مرور واحدة لجميع حساباتك.",
-            "نصيحة أمنية: فعّل التحقق الثنائي (2FA) فوراً.",
-            "نصيحة أمنية: احذر من الروابط التي تطلب منك تسجيل الدخول.",
-            "نصيحة أمنية: تأكد من تحديث نظام هاتفك بشكل دوري."
+            "نصيحة أمنية: فعّل التحقق الثنائي (2FA) فوراً على كافة حساباتك.",
+            "نصيحة أمنية: احذر من الروابط التي تطلب منك تسجيل الدخول المفاجئ.",
+            "نصيحة أمنية: تأكد من تحديث نظام هاتفك وتطبيقاتك بشكل دوري."
         ];
         let tipIdx = 0;
         setInterval(() => {
             tipIdx = (tipIdx + 1) % tips.length;
             document.getElementById('tipText').innerText = tips[tipIdx];
         }, 6000);
+
+        // Initialize News on load
+        window.onload = loadNews;
     </script>
 </body>
 </html>
