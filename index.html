@@ -11,13 +11,13 @@
             --neon-blue: #0044cc;
             --neon-cyan: #00cccc;
             --neon-yellow: #ffaa00;
-            /* ألوان المنصات */
             --instagram: #e1306c;
             --facebook: #1877f2;
             --whatsapp: #25d366;
             --telegram: #0088cc;
             --snapchat: #fffc00;
             --video-chat: #9b59b6;
+            --games: #f39c12;
         }
 
         body {
@@ -68,14 +68,6 @@
             50% { opacity: 0.8; transform: scale(1.02); }
         }
 
-        .subtitle {
-            color: var(--neon-cyan);
-            text-align: center;
-            font-size: clamp(0.8em, 4vw, 1.1em);
-            margin: 10px 0 20px 0;
-            font-weight: bold;
-        }
-
         .status-bar {
             background: #111;
             border: 1px solid #333;
@@ -89,18 +81,9 @@
             direction: ltr;
         }
 
-        .content-area {
-            text-align: center;
-            line-height: 1.8;
-            font-size: clamp(0.9em, 3.5vw, 1.1em);
-            margin-bottom: 25px;
-            color: var(--neon-green);
-        }
-
-        /* شبكة الخدمات المطورة */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
             gap: 12px;
             margin-bottom: 25px;
         }
@@ -114,71 +97,77 @@
             cursor: pointer;
             transition: 0.3s;
             border-radius: 4px;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
+            border: 1px solid #444;
+        }
+
+        .btn-ig { color: var(--instagram); border-color: var(--instagram); }
+        .btn-fb { color: var(--facebook); border-color: var(--facebook); }
+        .btn-wa { color: var(--whatsapp); border-color: var(--whatsapp); }
+        .btn-tg { color: var(--telegram); border-color: var(--telegram); }
+        .btn-snap { color: var(--snapchat); border-color: var(--snapchat); }
+        .btn-video { color: var(--video-chat); border-color: var(--video-chat); }
+        .btn-games { color: var(--games); border-color: var(--games); }
+
+        .service-btn:hover { background: rgba(255,255,255,0.1); transform: translateY(-3px); }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 100;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.95);
             justify-content: center;
+            align-items: center;
         }
 
-        .btn-ig { border: 1px solid var(--instagram); color: var(--instagram); }
-        .btn-ig:hover { background: var(--instagram); color: #fff; box-shadow: 0 0 15px var(--instagram); }
+        .modal-content {
+            background-color: #050505;
+            border: 2px solid var(--neon-cyan);
+            padding: 25px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 0 20px var(--neon-cyan);
+            position: relative;
+        }
 
-        .btn-fb { border: 1px solid var(--facebook); color: var(--facebook); }
-        .btn-fb:hover { background: var(--facebook); color: #fff; box-shadow: 0 0 15px var(--facebook); }
+        .close-modal {
+            color: var(--neon-red);
+            position: absolute;
+            top: 10px;
+            left: 15px;
+            font-size: 30px;
+            cursor: pointer;
+        }
 
-        .btn-wa { border: 1px solid var(--whatsapp); color: var(--whatsapp); }
-        .btn-wa:hover { background: var(--whatsapp); color: #fff; box-shadow: 0 0 15px var(--whatsapp); }
-
-        .btn-tg { border: 1px solid var(--telegram); color: var(--telegram); }
-        .btn-tg:hover { background: var(--telegram); color: #fff; box-shadow: 0 0 15px var(--telegram); }
-
-        .btn-snap { border: 1px solid var(--snapchat); color: var(--snapchat); }
-        .btn-snap:hover { background: var(--snapchat); color: #000; box-shadow: 0 0 15px var(--snapchat); }
-
-        .btn-video { border: 1px solid var(--video-chat); color: var(--video-chat); }
-        .btn-video:hover { background: var(--video-chat); color: #fff; box-shadow: 0 0 15px var(--video-chat); }
-
-        .scanner-box {
-            border: 1px dashed #444;
+        .menu-item {
+            display: block;
             padding: 15px;
-            background: rgba(255, 0, 0, 0.05);
-            text-align: center;
-            margin-bottom: 20px;
+            margin: 10px 0;
+            background: #111;
+            border: 1px solid #333;
+            color: #eee;
+            text-decoration: none;
+            text-align: right;
+            transition: 0.2s;
         }
 
-        .scanner-input {
+        .menu-item:hover {
+            border-color: var(--neon-green);
+            background: #1a1a1a;
+        }
+
+        .id-input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
             background: #000;
             border: 1px solid var(--neon-green);
             color: var(--neon-green);
-            padding: 12px;
-            width: 85%;
-            margin-bottom: 10px;
-            outline: none;
             text-align: center;
-            box-sizing: border-box;
-        }
-
-        .scan-btn {
-            background: var(--neon-green);
-            color: #000;
-            border: none;
-            padding: 12px 25px;
-            cursor: pointer;
-            font-weight: bold;
-            width: 85%;
-            max-width: 200px;
-        }
-
-        .news-trigger-btn {
-            display: block;
-            width: 100%;
-            padding: 12px;
-            background: transparent;
-            border: 1px solid var(--neon-cyan);
-            color: var(--neon-cyan);
-            font-weight: bold;
-            cursor: pointer;
-            margin-bottom: 15px;
         }
 
         .main-btn {
@@ -190,115 +179,68 @@
             text-align: center;
             font-weight: bold;
             box-shadow: 0 0 15px var(--neon-red);
-            margin-bottom: 20px;
+            margin-top: 20px;
         }
-
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.9);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background-color: #050505;
-            border: 2px solid var(--neon-cyan);
-            padding: 20px;
-            width: 90%;
-            max-width: 600px;
-        }
-
-        .close-modal { color: var(--neon-red); float: left; font-size: 28px; cursor: pointer; }
-
-        #log-display { font-size: 0.7em; color: #555; margin-top: 20px; direction: ltr; text-align: center; }
-
-        .tip-box { margin-top: 20px; border-top: 1px solid #222; padding-top: 15px; color: var(--neon-yellow); font-size: 0.85em; text-align: center; }
     </style>
 </head>
 <body>
 
     <canvas id="matrix-canvas"></canvas>
 
-    <div id="newsModal" class="modal">
+    <!-- النافذة المنبثقة الديناميكية -->
+    <div id="serviceModal" class="modal">
         <div class="modal-content">
-            <span class="close-modal" onclick="closeNews()">&times;</span>
-            <h2 style="color: var(--neon-cyan); border-bottom: 1px solid var(--neon-cyan); padding-bottom: 10px;">[!] آخر الأخبار الأمنية</h2>
-            <ul id="news-list" style="padding: 0; margin-top: 20px; list-style: none;"></ul>
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 id="modalTitle" style="color: var(--neon-cyan); border-bottom: 1px solid var(--neon-cyan); padding-bottom: 10px; text-align: center;"></h2>
+            <div id="modalBody"></div>
         </div>
     </div>
 
     <div class="console-container">
         <h1 class="brand-name">CYBERHASSAN</h1>
-        <div class="subtitle">خدمات الأمن الرقمي الاحترافية</div>
+        <div style="text-align:center; color:var(--neon-cyan); margin-bottom:20px; font-weight:bold;">نظام الخدمات التقنية المتكامل</div>
 
         <div class="status-bar">
             <span>NETWORK: SECURE</span>
-            <span>LOCATION: KHAN YUNIS</span>
             <span id="uptime">UPTIME: 00:00:00</span>
+            <span>GAZA: ACTIVE</span>
         </div>
 
-        <div class="content-area">
-            <div>> أهلاً بك في نظام التشغيل الآمن.</div>
-            <div>> اختر منصة الخدمة المطلوبة لبدء الدعم الفني المخصص.</div>
-        </div>
-
-        <!-- شبكة الخدمات المحدثة -->
         <div class="services-grid">
-            <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="service-btn btn-ig">انستغرام</a>
-            <a href="#" class="service-btn btn-fb">فيسبوك</a>
-            <a href="#" class="service-btn btn-wa">واتساب</a>
-            <a href="https://t.me/EngHassanBMohra" target="_blank" class="service-btn btn-tg">تيليجرام</a>
-            <a href="#" class="service-btn btn-snap">سناب شات</a>
-            <a href="#" class="service-btn btn-video">دردشة الفيديو</a>
+            <div class="service-btn btn-ig" onclick="openService('ig')">خدمات انستغرام</div>
+            <div class="service-btn btn-fb" onclick="openService('fb')">خدمات فيسبوك</div>
+            <div class="service-btn btn-wa" onclick="openService('wa')">خدمات واتساب</div>
+            <div class="service-btn btn-tg" onclick="openService('tg')">خدمات تيليجرام</div>
+            <div class="service-btn btn-snap" onclick="openService('snap')">خدمات سناب شات</div>
+            <div class="service-btn btn-video" onclick="openService('video')">دردشة الفيديو</div>
+            <div class="service-btn btn-games" onclick="openService('games')">خدمات الألعاب</div>
         </div>
 
-        <div class="scanner-box">
-            <div style="margin-bottom:10px; font-size:0.8em; color:#fff;">أداة فحص الروابط (Smart Scan)</div>
-            <input type="text" id="urlInput" class="scanner-input" placeholder="أدخل الرابط للفحص...">
-            <button class="scan-btn" onclick="startScan()">بدء الفحص</button>
-            <div id="scanResult" style="margin-top: 10px; font-size: 0.8em;"></div>
-        </div>
+        <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="main-btn">تواصل مباشر مع الدعم الفني [!]</a>
 
-        <button onclick="openNews()" class="news-trigger-btn">عرض آخر الأخبار الأمنية 📢</button>
-        
-        <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="main-btn">تقديم طلب طوارئ عاجل [!]</a>
-
-        <div id="log-display">> System Ready...</div>
-
-        <div class="tip-box" id="tipText">
-            نصيحة: لا تفتح روابط من مصادر مجهولة.
-        </div>
-
-        <div style="text-align:center; font-size:0.6em; color:#222; margin-top:20px;">© 2026 CYBERHASSAN | GAZA STRIP</div>
+        <div id="log-display" style="text-align:center; font-size:0.7em; color:#555; margin-top:20px;">> Terminal Ready...</div>
+        <div style="text-align:center; font-size:0.6em; color:#222; margin-top:10px;">© 2026 CYBERHASSAN | KHAN YUNIS</div>
     </div>
 
     <script>
+        // Matrix Effect
         const canvas = document.getElementById('matrix-canvas');
         const ctx = canvas.getContext('2d');
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.onresize = resize; resize();
-
-        const letters = "01"; const fontSize = 15;
-        const columns = canvas.width / fontSize; const drops = [];
-        for (let i = 0; i < columns; i++) drops[i] = 1;
-
+        const drops = Array(Math.floor(canvas.width/15)).fill(1);
         function draw() {
             ctx.fillStyle = "rgba(0, 0, 0, 0.1)"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#003300"; ctx.font = fontSize + "px arial";
-            for (let i = 0; i < drops.length; i++) {
-                ctx.fillText(letters[Math.floor(Math.random() * letters.length)], i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            ctx.fillStyle = "#003300"; ctx.font = "15px arial";
+            drops.forEach((y, i) => {
+                ctx.fillText(Math.floor(Math.random()*2), i * 15, y * 15);
+                if (y * 15 > canvas.height && Math.random() > 0.975) drops[i] = 0;
                 drops[i]++;
-            }
+            });
         }
         setInterval(draw, 33);
 
+        // Uptime Counter
         let sec = 0;
         setInterval(() => {
             sec++;
@@ -308,31 +250,31 @@
             document.getElementById('uptime').innerText = `UPTIME: ${h}:${m}:${s}`;
         }, 1000);
 
-        function openNews() { document.getElementById('newsModal').style.display = "flex"; loadNews(); }
-        function closeNews() { document.getElementById('newsModal').style.display = "none"; }
+        // Service Modal Logic
+        const services = {
+            ig: { title: "خدمات انستغرام", items: ["توثيق حساب انستغرام بالعلامة الزرقاء", "زيادة لايكات + متابعين + تعليقات"] },
+            fb: { title: "خدمات فيسبوك", items: ["توثيق حساب فيسبوك بالعلامة الزرقاء", "زيادة لايكات + متابعين + تعليقات"] },
+            wa: { title: "خدمات واتساب", items: ["تأمين حساب واتساب"] },
+            tg: { title: "خدمات تيليجرام", items: ["تخطي الدفع في تيليجرام", "توثيق حساب تيليجرام بالعلامة الزرقاء", "شحن نجوم تيليجرام"] },
+            snap: { title: "خدمات سناب شات", items: ["توثيق حساب سناب شات بالعلامة الزرقاء"] },
+            video: { title: "دردشة الفيديو", items: ["شحن كوينزات"], hasID: true },
+            games: { title: "خدمات الألعاب", items: ["شحن شدات / كوينزات / جواهر"], hasID: true }
+        };
 
-        function loadNews() {
-            const list = document.getElementById('news-list');
-            list.innerHTML = `
-                <li style="margin-bottom: 15px; border-bottom: 1px solid #222; padding-bottom: 10px;">
-                    <span style="color: var(--neon-red); font-size: 0.8em;">[2026-05-14]</span><br>
-                    <span style="color: #eee;">تحذير من روابط احتيالية تنتشر عبر تطبيقات دردشة الفيديو.</span>
-                </li>
-            `;
+        function openService(key) {
+            const data = services[key];
+            document.getElementById('modalTitle').innerText = data.title;
+            let html = data.items.map(item => `<a href="https://www.instagram.com/ha77an_x220" target="_blank" class="menu-item">> ${item}</a>`).join('');
+            if(data.hasID) {
+                html += `<div style="margin-top:20px; color:var(--neon-green); text-align:center;">يرجى إدخال الـ ID الخاص بك:</div>
+                         <input type="text" class="id-input" placeholder="Enter ID here...">
+                         <a href="https://www.instagram.com/ha77an_x220" target="_blank" class="menu-item" style="text-align:center; background:var(--neon-blue); margin-top:15px;">تأكيد وطلب الشحن</a>`;
+            }
+            document.getElementById('modalBody').innerHTML = html;
+            document.getElementById('serviceModal').style.display = "flex";
         }
 
-        function startScan() {
-            const res = document.getElementById('scanResult');
-            res.innerHTML = "<span style='color:yellow;'>Scanning...</span>";
-            setTimeout(() => { res.innerHTML = "<span style='color:green;'>[OK] الرابط يبدو آمناً.</span>"; }, 1000);
-        }
-
-        const tips = ["احذر الهندسة الاجتماعية", "فعّل التحقق الثنائي", "حدث تطبيقاتك دورياً"];
-        let tIdx = 0;
-        setInterval(() => {
-            document.getElementById('tipText').innerText = "نصيحة: " + tips[tIdx];
-            tIdx = (tIdx + 1) % tips.length;
-        }, 5000);
+        function closeModal() { document.getElementById('serviceModal').style.display = "none"; }
     </script>
 </body>
 </html>
